@@ -235,7 +235,7 @@ impl Db {
         use std::collections::hash_map::Entry;
 
         // Acquire the mutex
-        let mut state = self.shared.state.lock().unwrap();
+        let mut state = self.shared.state.lock().unwrap(); // 加锁
 
         // If there is no entry for the requested channel, then create a new
         // broadcast channel and associate it with the key. If one already

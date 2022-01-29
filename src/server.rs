@@ -240,7 +240,7 @@ impl Listener {
             //
             // `acquire()` returns `Err` when the semaphore has been closed. We
             // don't ever close the sempahore, so `unwrap()` is safe.
-            self.limit_connections.acquire().await.unwrap().forget();
+            self.limit_connections.acquire().await.unwrap().forget(); // TODO(zhengliang): forget?
 
             // Accept a new socket. This will attempt to perform error handling.
             // The `accept` method internally attempts to recover errors, so an
@@ -250,7 +250,7 @@ impl Listener {
             // Create the necessary per-connection handler state.
             let mut handler = Handler {
                 // Get a handle to the shared database.
-                db: self.db_holder.db(),
+                db: self.db_holder.db(), // 增加引用计数
 
                 // Initialize the connection state. This allocates read/write
                 // buffers to perform redis protocol frame parsing.
